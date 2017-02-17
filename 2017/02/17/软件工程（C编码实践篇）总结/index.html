@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="啊，你在看我博客"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>软件工程（C编码实践篇）总结 - Blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/code_fork.ico"></head><body><div class="post-header"><img class="background" src="/default_images/post_background.jpg"><div class="post-title"><h1 class="title">软件工程（C编码实践篇）总结</h1><ul class="meta"><li><i class="icon icon-author"></i>Walden Lu</li><li><i class="icon icon-clock"></i>3 Minutes</li><li><i class="icon icon-calendar"></i>February 17, 2017</li></ul></div></div><div class="article-content" style="max-width:600px"><p>原创作品转载请注明出处 + 《软件工程（C编码实践篇）》MOOC课程<a href="http://mooc.study.163.com/course/USTC-1000002006" target="_blank" rel="external">http://mooc.study.163.com/course/USTC-1000002006</a></p>
+<p>##对软件工程的理解及学习软件工程（C编码实践篇）的心得:</p>
+<p>  我理解的软件工程，就是要用工程化的思想去写软件。即“软件的工程”，这和现实中的建筑工程等等的相类似，需要系统化工程化的方法，是一个在不断搭建的工程。和我们平时写小的Demo不同，当我们面对一个大的项目的时候，我们要考虑的不只是让代码跑起来，还需要考虑如何和其他参与项目的人员进行更好的沟通，如何让后期维护的人员能够更容易理解我们的代码。基于上述的种种要求，也就有了代码风格规范的要求，模块化设计的思想，接口规范和通用原则，callback函数的使用，子系统可重用的设计的引出等等。通过这些处理，提高了代码的可读性和可重用性，降低了后期维护的成本。</p>
+<p>  学习了孟宁老师的的软件工程课程，我收获颇多。孟宁老师讲课由浅入深，注重实践和知识的结合。随着命令行工具的迭代，讲授的知识也一步一步深入下去。从一开始的几行的menu.c，到最后命令行工具的迭代完成，真的就像是做完了一个工程一样，给人一种成就感。</p>
+<p>##课程报告与代码</p>
+<p>1.熟悉linux实验环境  </p>
+<p>【实验一：写一个hello world小程序 <a href="http://www.shiyanlou.com/courses/reports/1243991" target="_blank" rel="external">实验报告</a>  <a href="lab1http://git.shiyanlou.com/ssscorch/shiyanlou_cs122/src/master/lab1" target="_blank" rel="external">代码库</a> 】</p>
+<p>小结：在linux环境下，编写helloworld小程序。本次实验主要是让学生了解实验楼的环境，github的使用，linux的基本命令ls、cd，vi的基本操作，gcc编译程序等。</p>
+<p>2.代码风格规范</p>
+<p>【实验二：命令行菜单小程序V1.0 <a href="https://www.shiyanlou.com/courses/reports/1245029" target="_blank" rel="external">实验报告</a> <a href="lab2http://git.shiyanlou.com/ssscorch/shiyanlou_cs122/src/master/lab2" target="_blank" rel="external">代码库</a> 】</p>
+<p>小结：学习缩进、命名、注释等代码编排的风格规范。代码风格的原则：简明、易读、无二义性。</p>
+<p>3.基本的模块化设计</p>
+<p>【实验三：内部模块化的命令行菜单小程序V2.0 <a href="http://www.shiyanlou.com/courses/reports/1245544" target="_blank" rel="external">实验报告</a><a href="lab3http://git.shiyanlou.com/ssscorch/shiyanlou_cs122/src/master/lab3" target="_blank" rel="external">代码库</a> 】</p>
+<p>小结：模块化思想，代码的业务逻辑和数据存储之间的分离。在实验二的基础上将系统抽象为两个层级：菜单业务逻辑和菜单数据存储。</p>
+<p>4.重用模块的接口设计</p>
+<p>【实验四：用可重用的链表模块来实现命令行菜单小程序V2.5 <a href="https://www.shiyanlou.com/courses/reports/1246311" target="_blank" rel="external">实验报告</a> <a href="lab4http://git.shiyanlou.com/ssscorch/shiyanlou_cs122/src/master/lab4" target="_blank" rel="external">代码库</a> 】</p>
+<p>小结：学习接口规范，了解内聚和耦合(讲究高内聚低耦合)，通用原则。</p>
+<p>5.可重用模块的接口设计（callback函数） 【实验五：用callback增强链表模块来实现命令行菜单小程序V2.8 <a href="https://www.shiyanlou.com/courses/reports/1247147" target="_blank" rel="external">实验报告</a> <a href="lab5http://git.shiyanlou.com/ssscorch/shiyanlou_cs122/src/master/lab5" target="_blank" rel="external">代码库</a> 】</p>
+<p>小结：应用callback函数的方法来增加模块通用性，实现信息隐藏。</p>
+<p>6.函数的可重入性（reentrant）及线程安全浅析</p>
+<p>小结：了解多线程的概念，知道函数的可重入性（reentrant）与线程安全概念和关系。用互斥锁，读写锁改进程序。</p>
+<p>7.子系统的可重用设计</p>
+<p>【实验七：将menu设计为可重用的子系统 <a href="https://www.shiyanlou.com/courses/reports/1248193" target="_blank" rel="external">实验报告</a> <a href="lab7http://git.shiyanlou.com/ssscorch/shiyanlou_cs122/src/master/lab7" target="_blank" rel="external">代码库</a> 】</p>
+<p>小结：学会写Makefile工程文件，学会了使用getopt函数。</p>
+<p>8.代码背后的设计思想</p>
+<p>小结：学习从不同的质量视角，例如产品视角、用户的视角等 ，将menu开源希望有人使用它。 总结了设计方法论和几个重要的设计指导原则， 模块化、接口设计、信息隐藏、 增量开发、抽象和一般化。</p>
+<p>##代码层面的软件工程的理解</p>
+<p>通过学习本课程，我了解到，代码一定要写的规范、易于阅读。代码风格就如同人的外貌，而封装接口就是衣装搭配，代码的可重用性代表工作能力，可重入函数和线程安全体现了这个人驾驭复杂局面的能力。2000行代码复杂度是初级程序员的第一个瓶颈，包容变化是模块化的主要作用。</p>
+<p>代码设计规范</p>
+<ul>
+<li>KISS(Keep it simple and stupid)</li>
+<li>Using design to frame the code （用设计框代码，设计与实现保持一致）</li>
+<li>不要和陌生人说话</li>
+<li>一定要有错误处理 （功能实现/错误处理:2/8）</li>
+<li>用数据结构来简化代码</li>
+</ul>
+<p>高内聚低耦合的架构设计目标</p>
+<p>函数的可重入性</p>
+<p>##学习《软件工程（C编码实践篇）》课程中最大的收获：<br>  通过自己动手写一个小的Demo，让我对软件工程有了一个全新的认识，理解了一些软件工程的思想方法。让我能够站在一个软件开发人员的角度来看待一个项目。软件能不能跑起来当然重要，但这并不是唯一的要考虑的问题，还要考虑一个软件是否符合工程化的思想，是否做到了模块化、可重入、线程安全等等标准。</p>
+<p>##学习完《软件工程（C编码实践篇）》课程后最大的遗憾：<br>  关于课程本身并没有什么遗憾，遗憾的是在这之前自己没有做过什么完整的项目，通过这次课程算是体验了一下工程的魅力。</p>
+</div><div class="article-meta" style="max-width:600px"></div><div class="article-comment" style="max-width:600px"><div class="ds-thread" id="ds-thread" data-thread-key="ciz9g5t8q0002dgvzneqmtl54" data-title="软件工程（C编码实践篇）总结" data-url="http://yoursite.com/2017/02/17/软件工程（C编码实践篇）总结/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+var duoshuoQuery = {short_name: siteName};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();</script></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/2017/02/17/Servlet-工程-web-xml-中的-servlet-和-servlet-mapping-标签/"><i class="icon icon-arror-left"></i></a></li><li><a href="/2017/02/16/hello-world/"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/WaldenLu" title="GitHub" target="_blank"><i class="icon icon-github"></i></a></li><li><a href="972672562@qq.com" title="Email" target="_blank"><i class="icon icon-email"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Blog</p></div></div></body></html>
