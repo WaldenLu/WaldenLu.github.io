@@ -63,11 +63,31 @@
 </thead>
 <tbody>
 <tr>
-<td></td>
+<td>CS</td>
+<td style="text-align:center">代码段寄存器(Code Segment Register)</td>
+</tr>
+<tr>
+<td>DS</td>
+<td style="text-align:center">数据段寄存器(Data Segment Register)</td>
+</tr>
+<tr>
+<td>ES</td>
+<td style="text-align:center">附加段寄存器(Extra Segment Register)</td>
+</tr>
+<tr>
+<td>SS</td>
+<td style="text-align:center">堆栈段寄存器(Stack Segment Register)</td>
+</tr>
+<tr>
+<td>FS</td>
+<td style="text-align:center">附加段寄存器(Extra Segment Register)</td>
+</tr>
+<tr>
+<td>GS</td>
+<td style="text-align:center">附加段寄存器(Extra Segment Register)</td>
 </tr>
 </tbody>
 </table>
-<p>CS  |代码段寄存器(Code Segment Register)<br>DS  |数据段寄存器(Data Segment Register)<br>ES  |附加段寄存器(Extra Segment Register)<br>SS  |堆栈段寄存器(Stack Segment Register)<br>FS  |附加段寄存器(Extra Segment Register)<br>GS  |附加段寄存器(Extra Segment Register)</p>
 <h3 id="几种寻址方式"><a href="#几种寻址方式" class="headerlink" title="几种寻址方式"></a>几种寻址方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">movl %eax, %edx     // edx = eax;                 寄存器寻址(register mode)</div><div class="line">movl $0x123, %edx   // edx = 0x123;               立即数/立即寻址(immediate)</div><div class="line">movl 0x123, %edx    // edx = *(int32_t*)0x123;    直接寻址(direct)</div><div class="line">movl (%ebx), %edx   // edx = *(int32_t*)ebx;      间接寻址(indirect)</div><div class="line">movl 4(%ebx), %edx  // edx = *(int32_t*)(ebx+4);  基址寻址(displaced)</div></pre></td></tr></table></figure>
 <h2 id="反汇编一个简单的C程序"><a href="#反汇编一个简单的C程序" class="headerlink" title="反汇编一个简单的C程序"></a>反汇编一个简单的C程序</h2><hr>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">g</span><span class="params">(<span class="keyword">int</span> x)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> x + <span class="number">4</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> g(x);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> f(<span class="number">5</span>) + <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -95,7 +115,7 @@
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><hr>
 <p>计算机的工作过程我觉得图灵机模型已经很好的解释了：一板一眼，按照当前读入的信息，结合自己的内部状态来决定下一跳的位置，如此循环。  </p>
 <p>本文介绍了基础的汇编代码的分析，是linux内核分析的第一步，只有充分理解了计算机指令是如何执行的才有可能自己写出一个简单的linux内核。</p>
-</div><div class="article-meta" style="max-width:600px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序堆栈/">程序堆栈</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux内核分析/">linux内核分析</a><span class="category-list-count">1</span></li></ul></div></div><div class="article-comment" style="max-width:600px"><div class="ds-thread" id="ds-thread" data-thread-key="ciznuvqzf0004kovz32tx1qaj" data-title="(一)计算机是如何工作的" data-url="http://yoursite.com/2017/02/25/计算机是如何工作的/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+</div><div class="article-meta" style="max-width:600px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序堆栈/">程序堆栈</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux内核分析/">linux内核分析</a><span class="category-list-count">1</span></li></ul></div></div><div class="article-comment" style="max-width:600px"><div class="ds-thread" id="ds-thread" data-thread-key="ciznuzdfo0004d8vz39r4bz4b" data-title="(一)计算机是如何工作的" data-url="http://yoursite.com/2017/02/25/计算机是如何工作的/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
 var duoshuoQuery = {short_name: siteName};
 (function() {
   var ds = document.createElement('script');
