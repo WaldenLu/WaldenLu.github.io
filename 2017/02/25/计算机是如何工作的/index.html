@@ -1,18 +1,18 @@
 <!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="啊，你在看我博客"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>(一)计算机是如何工作的 - Blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/code_fork.ico"></head><body><div class="post-header"><img class="background" src="/default_images/post_background.jpg"><div class="post-title"><h1 class="title">(一)计算机是如何工作的</h1><ul class="meta"><li><i class="icon icon-author"></i>Walden Lu</li><li><i class="icon icon-clock"></i>10 Minutes</li><li><i class="icon icon-calendar"></i>February 25, 2017</li></ul></div></div><div class="article-content" style="max-width:600px"><p>原创作品转载请注明出处</p>
-<h2 id="冯诺依曼体系结构"><a href="#冯诺依曼体系结构" class="headerlink" title="冯诺依曼体系结构"></a>冯诺依曼体系结构</h2><hr>
-<p>在介绍冯诺依曼体系结构之前，有必要说一下<code>图灵机</code>。</p>
+<p>本文简单介绍了冯诺依曼体系结构和计算机汇编的基础知识。<br><a id="more"></a></p>
+<h2 id="冯诺依曼体系结构"><a href="#冯诺依曼体系结构" class="headerlink" title="冯诺依曼体系结构"></a><h2 id="冯诺依曼体系结构">冯诺依曼体系结构</h2></h2><p>在介绍冯诺依曼体系结构之前，有必要说一下<code>图灵机</code>。</p>
 <blockquote>
-<p>图灵机，又称图灵计算、图灵计算机，是由数学家阿兰·麦席森·图灵（1912～1954）提出的一种抽象计算模型，即将人们使用纸笔进行数学运算的过程进行抽象，由一个虚拟的机器替代人们进行数学运算。<br><a id="more"></a><br>所谓的图灵机就是指一个抽象的机器，它有一条无限长的 <strong>纸带</strong>，纸带分成了一个一个的<strong>小方格</strong>，每个方格有不同的颜色。有一个<strong>机器头</strong>在纸带上移来移去。机器头有一组内部状态，还有一些固定的程序。在每个时刻，机器头都要从当前纸带上读入一个方格信息，然后结合自己的内部状态查找程序表，根据程序输出信息到纸带方格上，并转换自己的内部状态，然后进行移动。</p>
+<p>图灵机，又称图灵计算、图灵计算机，是由数学家阿兰·麦席森·图灵（1912～1954）提出的一种抽象计算模型，即将人们使用纸笔进行数学运算的过程进行抽象，由一个虚拟的机器替代人们进行数学运算。<br><!--more--><br>所谓的图灵机就是指一个抽象的机器，它有一条无限长的 <strong>纸带</strong>，纸带分成了一个一个的<strong>小方格</strong>，每个方格有不同的颜色。有一个<strong>机器头</strong>在纸带上移来移去。机器头有一组内部状态，还有一些固定的程序。在每个时刻，机器头都要从当前纸带上读入一个方格信息，然后结合自己的内部状态查找程序表，根据程序输出信息到纸带方格上，并转换自己的内部状态，然后进行移动。</p>
 </blockquote>
 <p>很明显的，上述的描述就是现代计算机运转方式的一种抽象：<br>纸带==========计算机的内存空间<br>小方格========一块地址空间(堆栈上的一格)<br>机器头========类似于eip，指向待执行的指令<br>转换状态|移动==根据指令跳转并改变一些寄存器状态</p>
 <p><img src="http://g.hiphotos.baidu.com/baike/w%3D268%3Bg%3D0/sign=be15110fe924b899de3c7e3e563d7aa8/0823dd54564e92584724bde19c82d158ccbf4ea8.jpg" alt="图灵机模型"></p>
-<p><code>冯诺依曼机</code>就是在图灵机这个概念模型上设计的。<br>在冯诺依曼机上的体现：<br>纸带===========诺依曼计算机体系中的存储<br>机器头=========输入和输出<br>规则===========对应运算<br>如何移动=======控制</p>
+<p><code>冯诺依曼机</code>就是在图灵机这个概念模型上设计的。<br><img src="https://imgsa.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5b8ec5628db1cb132a643441bc3d3d2b/a8773912b31bb051973f1da5367adab44aede020.jpg" alt="冯诺依曼体系结构"><br>在冯诺依曼机上的体现：<br>纸带===========诺依曼计算机体系中的存储器<br>机器头=========输入和输出<br>规则===========运算器<br>如何移动=======控制器</p>
 <blockquote>
 <p>(1)采用存储程序方式，指令和数据不加区别混合存储在同一个存储器中，数据和程序在内存中是没有区别的,它们都是内存中的数据,当EIP指针指向哪 CPU就加载那段内存中的数据,如果是不正确的指令格式,CPU就会发生错误中断. 在现在CPU的保护模式中,每个内存段都有其描述符,这个描述符记录着这个内存段的访问权限(可读,可写,可执行).这就变相的指定了哪些内存中存储的是指令哪些是数据）<br>指令和数据都可以送到运算器进行运算，即由指令组成的程序是可以修改的。<br>  (2)存储器是按地址访问的线性编址的一维结构，每个单元的位数是固定的。<br>  (3)指令由操作码和地址组成。操作码指明本指令的操作类型,地址码指明操作数和地址。操作数本身无数据类型的标志，它的数据类型由操作码确定。<br>  (4)通过执行指令直接发出控制信号控制计算机的操作。指令在存储器中按其执行顺序存放，由指令计数器指明要执行的指令所在的单元地址。指令计数器只有一个，一般按顺序递增，但执行顺序可按运算结果或当时的外界条件而改变。<br>  (5)以运算器为中心，I/O设备与存储器间的数据传送都要经过运算器。<br>  (6)数据以二进制表示。</p>
 </blockquote>
-<p><img src="https://imgsa.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5b8ec5628db1cb132a643441bc3d3d2b/a8773912b31bb051973f1da5367adab44aede020.jpg" alt="冯诺依曼体系结构"></p>
-<h2 id="32位X86汇编基础"><a href="#32位X86汇编基础" class="headerlink" title="32位X86汇编基础"></a>32位X86汇编基础</h2><hr>
-<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><table>
+<h2 id="32位X86汇编基础"><a href="#32位X86汇编基础" class="headerlink" title="32位X86汇编基础"></a><h2 id="32位x86汇编基础">32位X86汇编基础</h2></h2><h3 id="通用寄存器">通用寄存器</h3> 
+
+<table>
 <thead>
 <tr>
 <th>寄存器</th>
@@ -54,7 +54,9 @@
 </tr>
 </tbody>
 </table>
-<h3 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h3><table>
+<h3 id="段寄存器">段寄存器</h3> 
+
+<table>
 <thead>
 <tr>
 <th>寄存器</th>
@@ -88,11 +90,14 @@
 </tr>
 </tbody>
 </table>
-<h3 id="几种寻址方式"><a href="#几种寻址方式" class="headerlink" title="几种寻址方式"></a>几种寻址方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">movl %eax, %edx     // edx = eax;                 寄存器寻址(register mode)</div><div class="line">movl $0x123, %edx   // edx = 0x123;               立即数/立即寻址(immediate)</div><div class="line">movl 0x123, %edx    // edx = *(int32_t*)0x123;    直接寻址(direct)</div><div class="line">movl (%ebx), %edx   // edx = *(int32_t*)ebx;      间接寻址(indirect)</div><div class="line">movl 4(%ebx), %edx  // edx = *(int32_t*)(ebx+4);  基址寻址(displaced)</div></pre></td></tr></table></figure>
-<h2 id="反汇编一个简单的C程序"><a href="#反汇编一个简单的C程序" class="headerlink" title="反汇编一个简单的C程序"></a>反汇编一个简单的C程序</h2><hr>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">g</span><span class="params">(<span class="keyword">int</span> x)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> x + <span class="number">4</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> g(x);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> f(<span class="number">5</span>) + <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="几种寻址方式">几种寻址方式</h3>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">movl %eax, %edx     // edx = eax;                 寄存器寻址(register mode)</div><div class="line">movl $0x123, %edx   // edx = 0x123;               立即数/立即寻址(immediate)</div><div class="line">movl 0x123, %edx    // edx = *(int32_t*)0x123;    直接寻址(direct)</div><div class="line">movl (%ebx), %edx   // edx = *(int32_t*)ebx;      间接寻址(indirect)</div><div class="line">movl 4(%ebx), %edx  // edx = *(int32_t*)(ebx+4);  基址寻址(displaced)</div></pre></td></tr></table></figure>
+<h2 id="反汇编一个简单的C程序"><a href="#反汇编一个简单的C程序" class="headerlink" title="反汇编一个简单的C程序"></a><h2 id="反汇编一个简单的C程序">反汇编一个简单的C程序</h2></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">g</span><span class="params">(<span class="keyword">int</span> x)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> x + <span class="number">4</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> g(x);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">return</span> f(<span class="number">5</span>) + <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>将这段代码保存成main.c,用如下命令来进行编译<br><code>gcc –S –o main.s main.c -m32</code>命令执行完后,生成main.s这个汇编文件</p>
-<h3 id="分析汇编代码"><a href="#分析汇编代码" class="headerlink" title="分析汇编代码"></a>分析汇编代码</h3><p>基础知识：</p>
+<h3 id="分析汇编代码">分析汇编代码</h3> 
+
+<p>基础知识：</p>
 <ul>
 <li>ebp指向当前栈的栈底</li>
 <li>esp指向当前栈的栈顶</li>
@@ -100,10 +105,8 @@
 <li>popl %eax相当于<code>movl (%esp), %eax | addl $4, %esp</code></li>
 <li>call 0x12345相当于<code>pushl %eip(*) | movl $0x12345, %eip(*)</code></li>
 <li>ret相当于<code>popl %eip(*)</code></li>
-<li>enter相当于<br><code>pushl %ebp
-| movl %esp, %ebp</code></li>
-<li>leave相当于<br><code>movl %ebp, %esp
-| popl %ebp</code></li>
+<li>enter相当于<code>pushl %ebp| movl %esp, %ebp</code></li>
+<li>leave相当于<code>movl %ebp, %esp| popl %ebp</code></li>
 </ul>
 <p>ps:用(*)标注的寄存器,说明该寄存器不能被程序员直接修改,必须通过特定的指令才能使其改变</p>
 <p>以下是汇编代码:</p>
@@ -112,10 +115,9 @@
 <p>leave的作用与push刚好相反——退出当前程序段的栈。执行leave时，先是将ebp的值赋给esp(栈顶指针指向栈底，即清空了当前程序段的栈)，然后pop出ebp，即回到上一个程序段的栈底，esp因为出栈自增，恰好又指向新的栈顶。    </p>
 <p><strong>总结一下，堆栈在纸上画出来虽然是一种线性结构，但是在逻辑上，他却是一种嵌套的结构，传说中的俄罗斯套娃。</strong></p>
 <h5 id="分析过程可参照"><a href="#分析过程可参照" class="headerlink" title="分析过程可参照:"></a>分析过程可参照:</h5><p><img src="http://img1.ph.126.net/Y01FxJOKImMEcPPt_NApCg==/655836695753733547.gif" alt="汇编分析"></p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><hr>
-<p>计算机的工作过程我觉得图灵机模型已经很好的解释了：一板一眼，按照当前读入的信息，结合自己的内部状态来决定下一跳的位置，如此循环。  </p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语 "></a><h2 id="结语">结语</h2> </h2><p>计算机的工作过程我觉得图灵机模型已经很好的解释了：一板一眼，按照当前读入的信息，结合自己的内部状态来决定下一跳的位置，如此循环。  </p>
 <p>本文介绍了基础的汇编代码的分析，是linux内核分析的第一步，只有充分理解了计算机指令是如何执行的才有可能自己写出一个简单的linux内核。</p>
-</div><div class="article-meta" style="max-width:600px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序堆栈/">程序堆栈</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux内核分析/">linux内核分析</a><span class="category-list-count">1</span></li></ul></div></div><div class="article-comment" style="max-width:600px"><div class="ds-thread" id="ds-thread" data-thread-key="ciznuzdfo0004d8vz39r4bz4b" data-title="(一)计算机是如何工作的" data-url="http://yoursite.com/2017/02/25/计算机是如何工作的/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+</div><div class="article-meta" style="max-width:600px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序堆栈/">程序堆栈</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux内核分析/">linux内核分析</a><span class="category-list-count">1</span></li></ul></div></div><div class="article-comment" style="max-width:600px"><div class="ds-thread" id="ds-thread" data-thread-key="cizpa0od20001a8vz4pvmw0g1" data-title="(一)计算机是如何工作的" data-url="http://yoursite.com/2017/02/25/计算机是如何工作的/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
 var duoshuoQuery = {short_name: siteName};
 (function() {
   var ds = document.createElement('script');
